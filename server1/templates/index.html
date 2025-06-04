@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🔐 Truyền File An Toàn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(to right, #eef2f3, #cfd9df);
+        font-family: "Segoe UI", sans-serif;
+      }
+      .container {
+        max-width: 700px;
+        margin-top: 60px;
+      }
+      .card {
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        background: #fff;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+      }
+      .btn-success {
+        background-color: #28a745;
+        border: none;
+      }
+      .header-icon {
+        font-size: 40px;
+        color: #007bff;
+      }
+      .file-list li {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px 15px;
+        background-color: #f8f9fa;
+      }
+      .message {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card p-4">
+        <div class="text-center mb-4">
+          <div class="header-icon">📁</div>
+          <h2 class="fw-bold">Truyền File An Toàn</h2>
+          <p class="text-muted">Bảo vệ & Kiểm tra tính toàn vẹn với SHA-256</p>
+        </div>
+
+        {% if message %}
+        <div class="alert alert-info message text-center">{{ message }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="mb-4">
+          <div class="input-group">
+            <input type="file" name="file" class="form-control" required />
+            <button type="submit" class="btn btn-primary">📤 Gửi File</button>
+          </div>
+        </form>
+
+        <h5 class="mb-3">📥 Danh sách file đã nhận:</h5>
+        {% if files %}
+        <ul class="list-group file-list">
+          {% for f in files %}
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span>🗂️ {{ f }}</span>
+            <a
+              href="{{ url_for('download', filename=f) }}"
+              class="btn btn-sm btn-success"
+              >⬇️ Tải về</a
+            >
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">Hiện chưa có file nào được nhận.</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
